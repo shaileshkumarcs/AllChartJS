@@ -1,0 +1,173 @@
+
+<!doctype html>
+<html>
+
+<head>
+	<title>Tooltip Interaction Modes</title>
+	<script src="moment.js"></script>
+	<script src="Chart.bundle.js"></script>
+	<script src="utils.js"></script>
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	.chart-container {
+		width: 500px;
+		margin-left: 40px;
+		margin-right: 40px;
+		margin-bottom: 40px;
+	}
+	#container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div id="container">
+		</div>
+	</div>
+	<div style="width:75%;">
+		<canvas id="canvas"></canvas>
+	</div>
+	<script>
+		function createConfig(position) {
+			return {
+				type: 'line',
+				data: {
+					labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+					datasets: [{
+						label: 'My First dataset',
+						borderColor: window.chartColors.red,
+						backgroundColor: window.chartColors.red,
+						data: [8,12],
+						fill: false,
+					}, {
+						label: 'My Second dataset',
+						borderColor: window.chartColors.blue,
+						backgroundColor: window.chartColors.blue,
+						data: [25, 49],
+						fill: false,
+					}]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Tooltip Position: ' + position
+					},
+					tooltips: {
+						position: position,
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+					    yAxes: [{
+					      scaleLabel: {
+					        display: true,
+					        labelString: 'probability'
+					      }
+					    }]
+					  }   
+				}
+			};
+		}
+
+
+/******/
+
+
+
+		var color = Chart.helpers.color;
+		var barChartData = {
+			/*type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Chart.js Bar Chart'
+					}
+				},*/
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				label: 'Dataset 1',
+				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				label: 'Dataset 2',
+				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.blue,
+				borderWidth: 1,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}]
+
+		};
+
+
+/***************/
+
+
+		window.onload = function() {
+			var container = document.getElementById('container');
+
+			['average'].forEach(function(position) {
+				var div = document.createElement('div');
+				div.classList.add('chart-container');
+
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				container.appendChild(div);
+
+				var ctx2 = canvas.getContext('2d');
+				var config2 = createConfig(position);
+				new Chart(ctx2, config2);
+			});
+
+			var ctx3 = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx3, barChartData={
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Chart.js Bar Chart'
+					}
+				},
+			});
+		};
+	</script>
+</body>
+
+</html>
